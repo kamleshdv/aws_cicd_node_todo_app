@@ -1,0 +1,23 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+
+  tags:
+    - dev
+
+  script:
+    - echo "Stopping oldrr containers"
+    - docker compose down || true
+
+    - echo "Building image"
+    - docker compose build
+
+    - echo "Starting containers"
+    - docker compose up -d
+
+    - docker ps
+
+  only:
+    - main

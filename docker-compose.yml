@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+
+  # ──────────────────────────────────────────
+  # Frontend: Vite React App (Nginx se serve)
+  # ──────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: online-shopping-app:latest
+    container_name: shopping-app
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - shopping-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+# ──────────────────────────────────────────
+# Network
+# ──────────────────────────────────────────
+networks:
+  shopping-network:
+    driver: bridge
+

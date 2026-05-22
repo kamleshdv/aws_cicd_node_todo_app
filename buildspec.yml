@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 848928399247.dkr.ecr.ap-south-1.amazonaws.com
+
+  build:
+    commands:
+      - docker build -t nodejs-app .
+      - docker tag nodejs-app:latest 848928399247.dkr.ecr.ap-south-1.amazonaws.com/nodejs-app:latest
+
+  post_build:
+    commands:
+      - docker push 848928399247.dkr.ecr.ap-south-1.amazonaws.com/nodejs-app:latest
