@@ -34,7 +34,7 @@ jobs:
 
       
           script: |
-            cd /home/ubuntu/app
+            cd /home/ubuntu/appkk
             git pull origin main
             npm install --production
             pm2 restart my-app || pm2 start server.js --name "my-app"
